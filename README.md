@@ -22,3 +22,11 @@ Le serveur reçoit les signaux, reconstruit le caractère bit par bit, et affich
 ## 📁 Structure du projet
 
 # minitalk
+.
+├── src/
+│ ├── client.c
+│ ├── server.c
+│ ├── utils.c
+│ └── utils.h
+├── Makefile
+└── README.md
