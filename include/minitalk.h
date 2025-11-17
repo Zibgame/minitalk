@@ -6,7 +6,7 @@
 /*   By: zcadinot <zcadinot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 10:49:12 by zcadinot          #+#    #+#             */
-/*   Updated: 2025/11/17 11:47:12 by zcadinot         ###   ########.fr       */
+/*   Updated: 2025/11/17 11:59:30 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@
 # define BIT_SIZE 8
 
 void show_pid(pid_t pid);
+void	signal_handler(int sig)
 
 #endif
