@@ -6,29 +6,36 @@
 #    By: zcadinot <zcadinot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/17 10:51:11 by zcadinot          #+#    #+#              #
-#    Updated: 2025/11/17 10:51:20 by zcadinot         ###   ########.fr        #
+#    Updated: 2025/11/17 10:52:29 by zcadinot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = so_long
+NAME_SERVER = server
+NAME_CLIENT = client
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I include
 
-SRCS = $(wildcard src/*.c)
-OBJS = $(SRCS:.c=.o)
+SRCS_SERVER = src/server.c
+SRCS_CLIENT = src/client.c
+
+OBJS_SERVER = $(SRCS_SERVER:.c=.o)
+OBJS_CLIENT = $(SRCS_CLIENT:.c=.o)
 
 LIBFT = libft/libft.a
 
-all: $(NAME)
+all: $(NAME_SERVER) $(NAME_CLIENT)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) -lmlx -framework OpenGL -framework AppKit
+$(NAME_SERVER): $(OBJS_SERVER)
+	$(CC) $(CFLAGS) -o $(NAME_SERVER) $(OBJS_SERVER) $(LIBFT)
+
+$(NAME_CLIENT): $(OBJS_CLIENT)
+	$(CC) $(CFLAGS) -o $(NAME_CLIENT) $(OBJS_CLIENT) $(LIBFT)
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS_SERVER) $(OBJS_CLIENT)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME_SERVER) $(NAME_CLIENT)
 
 re: fclean all
