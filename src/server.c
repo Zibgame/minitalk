@@ -6,7 +6,7 @@
 /*   By: zcadinot <zcadinot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 10:56:58 by zcadinot          #+#    #+#             */
-/*   Updated: 2025/11/17 11:01:12 by zcadinot         ###   ########.fr       */
+/*   Updated: 2025/11/17 11:16:16 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(void)
 {
 	pid_t pid;
 	pid = getpid();
-	write(1, "Server PID: ", 12);
+
+	ft_putstr_fd(ft_itoa(pid),1);
 	return (0);
 }

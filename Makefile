@@ -6,7 +6,7 @@
 #    By: zcadinot <zcadinot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/17 10:51:11 by zcadinot          #+#    #+#              #
-#    Updated: 2025/11/17 11:12:43 by zcadinot         ###   ########.fr        #
+#    Updated: 2025/11/17 11:19:06 by zcadinot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,16 +23,14 @@ CFLAGS  = -Wall -Wextra -Werror -I include -I library/libft
 LIBFT_DIR = library/libft
 LIBFT     = $(LIBFT_DIR)/libft.a
 
-INCLUDE = -I include -I library/libft
-
 SRC_DIR = src
 OBJ_DIR = obj
 
-SRCS_SERVER = $(SRC_DIR)/server.c $(SRC_DIR)/utils.c
-SRCS_CLIENT = $(SRC_DIR)/client.c $(SRC_DIR)/utils.c
+SRCS_SERVER = server.c utils.c
+SRCS_CLIENT = client.c utils.c
 
-OBJS_SERVER = $(SRCS_SERVER:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-OBJS_CLIENT = $(SRCS_CLIENT:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJS_SERVER = $(addprefix $(OBJ_DIR)/,$(SRCS_SERVER:.c=.o))
+OBJS_CLIENT = $(addprefix $(OBJ_DIR)/,$(SRCS_CLIENT:.c=.o))
 
 # **************************************************************************** #
 #                                   RULES                                      #
@@ -46,9 +44,11 @@ $(NAME_SERVER): $(LIBFT) $(OBJS_SERVER)
 $(NAME_CLIENT): $(LIBFT) $(OBJS_CLIENT)
 	$(CC) $(CFLAGS) $(OBJS_CLIENT) $(LIBFT) -o $(NAME_CLIENT)
 
+# Compilation des .c en .o
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I$(INCLUDE) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
+# Création du dossier obj
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
@@ -74,3 +74,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+#
