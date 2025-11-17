@@ -6,7 +6,7 @@
 /*   By: zcadinot <zcadinot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 12:10:21 by zcadinot          #+#    #+#             */
-/*   Updated: 2025/11/17 12:10:38 by zcadinot         ###   ########.fr       */
+/*   Updated: 2025/11/17 12:17:45 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,9 @@ int	main(void)
 
 	pid = getpid();
 	show_pid(pid);
+	signal(SIGUSR1, signal_handler);
+	signal(SIGUSR2, signal_handler);
+	while (1)
+		pause();
 	return (0);
 }
