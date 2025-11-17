@@ -5,24 +5,25 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zcadinot <zcadinot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/17 10:56:58 by zcadinot          #+#    #+#             */
-/*   Updated: 2025/11/17 12:02:06 by zcadinot         ###   ########.fr       */
+/*   Created: 2025/11/17 12:10:21 by zcadinot          #+#    #+#             */
+/*   Updated: 2025/11/17 12:10:38 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	signal_handler(int sig)
+static void	signal_handler(int sig)
 {
-	static int bit_count = 0;
-	static unsigned char c = 0;
-	
-	c = 'x'; 
-	bit_count++;
+	static unsigned char	c = 0;
+	static int				bit_count = 0;
 
+	c <<= 1;
+	if (sig == SIGUSR1)
+		c |= 1;
+	bit_count++;
 	if (bit_count == 8)
 	{
-		write(1, &c,1);
+		write(1, &c, 1);
 		bit_count = 0;
 		c = 0;
 	}
@@ -30,9 +31,9 @@ void	signal_handler(int sig)
 
 int	main(void)
 {
-	pid_t pid;
-	pid = getpid();
+	pid_t	pid;
 
+	pid = getpid();
 	show_pid(pid);
 	return (0);
 }
