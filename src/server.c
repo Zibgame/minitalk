@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zcadinot <zcadinot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/17 12:10:21 by zcadinot          #+#    #+#             */
-/*   Updated: 2025/11/17 15:35:42 by zcadinot         ###   ########.fr       */
+/*   Created: 2025/11/17 15:53:25 by zcadinot          #+#    #+#             */
+/*   Updated: 2025/11/17 15:54:48 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,15 @@ static void	signal_handler(int sig)
 	static int				bit_count = 0;
 
 	c <<= 1;
-	if (sig == SIGUSR1)
+	if (sig == SIGUSR2)
 		c |= 1;
 	bit_count++;
 	if (bit_count == 8)
 	{
-		write(1, &c, 1);
+		if (c == '\0')
+			write(1, "\n", 1);
+		else
+			write(1, &c, 1);
 		bit_count = 0;
 		c = 0;
 	}
@@ -31,12 +34,16 @@ static void	signal_handler(int sig)
 
 int	main(void)
 {
-	pid_t	pid;
+	pid_t				pid;
+	struct sigaction	sa;
 
 	pid = getpid();
 	show_pid(pid);
-	signal(SIGUSR1, signal_handler);
-	signal(SIGUSR2, signal_handler);
+	sa.sa_handler = signal_handler;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_RESTART;
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
 	while (1)
 		pause();
 	return (0);
