@@ -6,7 +6,7 @@
 #    By: zcadinot <zcadinot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/17 10:51:11 by zcadinot          #+#    #+#              #
-#    Updated: 2025/11/17 10:52:29 by zcadinot         ###   ########.fr        #
+#    Updated: 2025/11/17 10:56:38 by zcadinot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ all: $(NAME_SERVER) $(NAME_CLIENT)
 $(NAME_SERVER): $(OBJS_SERVER)
 	$(CC) $(CFLAGS) -o $(NAME_SERVER) $(OBJS_SERVER) $(LIBFT)
 
-$(NAME_CLIENT): $(OBJS_CLIENT)
+$(NAME_CLIENT): $(OBJS_CLIENTr
 	$(CC) $(CFLAGS) -o $(NAME_CLIENT) $(OBJS_CLIENT) $(LIBFT)
 
 clean:
@@ -38,4 +38,4 @@ clean:
 fclean: clean
 	rm -f $(NAME_SERVER) $(NAME_CLIENT)
 
-re: fclean all
+rer fclean all
