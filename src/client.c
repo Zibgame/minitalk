@@ -6,22 +6,43 @@
 /*   By: zcadinot <zcadinot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 10:57:40 by zcadinot          #+#    #+#             */
-/*   Updated: 2025/11/17 11:52:34 by zcadinot         ###   ########.fr       */
+/*   Updated: 2025/11/17 12:26:04 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
+void	send_char(int pid, unsigned char c)
+{
+	int bit = 0;
+
+	while (bit < 8)
+	{
+		if (c & (1 << bit))
+			kill(pid, SIGUSR1);
+    else
+			kill(pid, SIGUSR2);
+		usleep(50);
+		bit++;
+	}
+}
+
 int main(int argc, char **argv)
 {
     pid_t   pid;
-    char    *message;
+    char    *msg;
+    int     i;
 
     pid = (pid_t)ft_atoi(argv[1]);
-    message = argv[2];
+    msg = argv[2];
     if (argc != 3)
         return (0);
-    show_pid(pid);
-    ft_putstr_fd(message,1);
+    i = 0;
+    while (msg[i])
+    {
+        send_char(pid, msg[i]);
+        i++;
+    }
+    send_char(pid, '\0');
     return 0;
 }
