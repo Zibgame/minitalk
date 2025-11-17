@@ -6,8 +6,16 @@
 /*   By: zcadinot <zcadinot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 10:56:58 by zcadinot          #+#    #+#             */
-/*   Updated: 2025/11/17 10:56:59 by zcadinot         ###   ########.fr       */
+/*   Updated: 2025/11/17 11:01:12 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minitalk.h"
 
+int	main(void)
+{
+	pid_t pid;
+	pid = getpid();
+	write(1, "Server PID: ", 12);
+	return (0);
+}
