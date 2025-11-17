@@ -6,6 +6,15 @@
 /*   By: zcadinot <zcadinot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 10:57:01 by zcadinot          #+#    #+#             */
-/*   Updated: 2025/11/17 11:19:39 by zcadinot         ###   ########.fr       */
+/*   Updated: 2025/11/17 11:53:35 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minitalk.h"
+
+
+void show_pid(pid_t pid)
+{
+    ft_putstr_fd(ft_itoa(pid),1);
+    write(1,"\n",1);
+}
