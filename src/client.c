@@ -6,11 +6,19 @@
 /*   By: zcadinot <zcadinot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 15:30:32 by zcadinot          #+#    #+#             */
-/*   Updated: 2025/11/17 16:10:22 by zcadinot         ###   ########.fr       */
+/*   Updated: 2025/11/24 16:33:52 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+static int	g_ack = 0;
+
+static void	ack_handler(int sig)
+{
+	(void)sig;
+	g_ack = 1;
+}
 
 static void	send_char(int pid, unsigned char c)
 {
@@ -19,46 +27,33 @@ static void	send_char(int pid, unsigned char c)
 	bit = 7;
 	while (bit >= 0)
 	{
+		g_ack = 0;
 		if (c & (1 << bit))
-		{
-			if (kill(pid, SIGUSR1) == -1)
-			{
-				ft_putstr_fd("Error: invalid PID\n", 2);
-				exit(1);
-			}
-		}
+			kill(pid, SIGUSR1);
 		else
-		{
-			if (kill(pid, SIGUSR2) == -1)
-			{
-				ft_putstr_fd("Error: invalid PID\n", 2);
-				exit(1);
-			}
-		}
-		usleep(200);
+			kill(pid, SIGUSR2);
+		while (g_ack == 0)
+			usleep(50);
 		bit--;
 	}
 }
 
 int	main(int argc, char **argv)
 {
-	pid_t	pid;
-	char	*msg;
-	int		i;
+	struct sigaction	sa;
+	pid_t				pid;
+	int					i;
 
 	if (argc != 3)
-	{
-		ft_putstr_fd("Usage: ./client <PID> <message>\n", 2);
-		return (1);
-	}
-	pid = (pid_t)ft_atoi(argv[1]);
-	msg = argv[2];
+		return (ft_putstr_fd("Usage: ./client <PID> <msg>\n", 2), 1);
+	sa.sa_handler = ack_handler;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGUSR1, &sa, NULL);
+	pid = ft_atoi(argv[1]);
 	i = 0;
-	while (msg[i])
-	{
-		send_char(pid, msg[i]);
-		i++;
-	}
+	while (argv[2][i])
+		send_char(pid, argv[2][i++]);
 	send_char(pid, '\0');
 	return (0);
 }
